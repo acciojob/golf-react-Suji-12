@@ -8,7 +8,6 @@ class App extends Component {
       left: 0
     };
   }
-
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDown);
   }
