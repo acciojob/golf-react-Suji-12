@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   handleKeyDown = (event) => {
-    if (event.keyCode === 39) {
+    if (event.keyCode === 39 && this.state.showBall) {
       this.setState((prevState) => ({
         left: prevState.left + 5
       }));
@@ -26,7 +26,7 @@ class App extends Component {
   };
 
   buttonClickHandler = () => {
-    this.setState({ showBall: true });
+    this.setState({ showBall: true, left: 0 });
   };
 
   renderChoice = () => {
@@ -42,8 +42,9 @@ class App extends Component {
       <div
         className="ball"
         style={{
-          position: "relative",
-          left: this.state.left + "px"
+          position: "absolute",
+          left: this.state.left + "px",
+          top: "0px"
         }}
       ></div>
     );
