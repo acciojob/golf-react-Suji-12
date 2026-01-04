@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   handleKeyDown(e) {
-    if (e.key === "ArrowRight") {
+    if (this.state.renderBall && e.key === "ArrowRight") {
       this.setState(prevState => ({
         left: prevState.left + 5
       }));
@@ -38,12 +38,11 @@ class App extends Component {
       return (
         <div
           className="ball"
-          style={{ left: `${this.state.left}px` }}
+          style={{ left: this.state.left + "px" }}
         ></div>
       );
-    } else {
-      return <button onClick={this.buttonClickHandler}>Start</button>;
     }
+    return <button onClick={this.buttonClickHandler}>Start</button>;
   }
 
   render() {
