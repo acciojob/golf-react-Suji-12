@@ -6,9 +6,11 @@ class App extends Component {
     super(props);
     this.state = {
       renderBall: false,
-      left: 0
+      posi: 0,
+      ballPosition: { left: "0px" }
     };
 
+    this.renderChoice = this.renderBallOrButton.bind(this);
     this.buttonClickHandler = this.buttonClickHandler.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
@@ -19,9 +21,11 @@ class App extends Component {
 
   handleKeyDown(e) {
     if (this.state.renderBall && e.key === "ArrowRight") {
-      this.setState(prevState => ({
-        left: prevState.left + 5
-      }));
+      const newPos = this.state.posi + 5;
+      this.setState({
+        posi: newPos,
+        ballPosition: { left: newPos + "px" }
+      });
     }
   }
 
@@ -36,19 +40,17 @@ class App extends Component {
   renderBallOrButton() {
     if (this.state.renderBall) {
       return (
-        <div
-          className="ball"
-          style={{ left: this.state.left + "px" }}
-        ></div>
+        <div className="ball" style={this.state.ballPosition}></div>
       );
+    } else {
+      return <button onClick={this.buttonClickHandler}>Start</button>;
     }
-    return <button onClick={this.buttonClickHandler}>Start</button>;
   }
 
   render() {
     return (
       <div className="playground">
-        {this.renderBallOrButton()}
+        {this.renderChoice()}
       </div>
     );
   }
