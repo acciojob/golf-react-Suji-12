@@ -1,32 +1,12 @@
 import React, { Component } from "react";
-import "../styles/App.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      renderBall: false,
-      posi: 0,
-      ballPosition: { left: "0px" }
+      showBall: false,
+      left: 0
     };
-
-    this.renderChoice = this.renderBallOrButton.bind(this);
-    this.buttonClickHandler = this.buttonClickHandler.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-  }
-
-  buttonClickHandler() {
-    this.setState({ renderBall: true });
-  }
-
-  handleKeyDown(e) {
-    if (this.state.renderBall && e.key === "ArrowRight") {
-      const newPos = this.state.posi + 5;
-      this.setState({
-        posi: newPos,
-        ballPosition: { left: newPos + "px" }
-      });
-    }
   }
 
   componentDidMount() {
@@ -37,19 +17,42 @@ class App extends Component {
     document.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  renderBallOrButton() {
-    if (this.state.renderBall) {
-      return (
-        <div className="ball" style={this.state.ballPosition}></div>
-      );
-    } else {
-      return <button onClick={this.buttonClickHandler}>Start</button>;
+  handleKeyDown = (event) => {
+    if (event.keyCode === 39) {
+      this.setState((prevState) => ({
+        left: prevState.left + 5
+      }));
     }
-  }
+  };
+
+  buttonClickHandler = () => {
+    this.setState({ showBall: true });
+  };
+
+  renderChoice = () => {
+    if (!this.state.showBall) {
+      return (
+        <button className="start" onClick={this.buttonClickHandler}>
+          Start
+        </button>
+      );
+    }
+
+    return (
+      <div
+        className="ball"
+        style={{
+          position: "relative",
+          left: this.state.left + "px"
+        }}
+      ></div>
+    );
+  };
 
   render() {
     return (
-      <div className="playground">
+      <div>
+        <h2>Game Flow</h2>
         {this.renderChoice()}
       </div>
     );
